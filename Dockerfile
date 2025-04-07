@@ -2,13 +2,19 @@ FROM python:3.9
 
 # Create a non-root user
 RUN useradd -ms /bin/bash appuser
-USER appuser
 
 WORKDIR /app/backend
 
 # Copy requirements.txt and install dependencies
 COPY requirements.txt /app/backend
+
+# Switch to root user to modify /etc/resolv.conf
+USER root
 RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
+# Switch back to appuser
+USER appuser
+
 RUN pip install --user --no-cache-dir -r requirements.txt
 
 # Copy application code
