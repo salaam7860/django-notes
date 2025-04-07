@@ -15,7 +15,14 @@ RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
 # Switch back to appuser
 USER appuser
 
+# Update pip
+RUN pip install --user --no-cache-dir --upgrade pip
+
+# Install dependencies
 RUN pip install --user --no-cache-dir -r requirements.txt
+
+# Add scripts to PATH
+ENV PATH="/home/appuser/.local/bin:${PATH}"
 
 # Copy application code
 COPY . /app/backend
