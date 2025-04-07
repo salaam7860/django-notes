@@ -8,7 +8,8 @@ WORKDIR /app/backend
 
 # Copy requirements.txt and install dependencies
 COPY requirements.txt /app/backend
-RUN pip install --user -r requirements.txt
+RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
+RUN pip install --user --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY . /app/backend
